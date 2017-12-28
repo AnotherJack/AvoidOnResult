@@ -24,8 +24,7 @@ public class AvoidOnResult {
 
     private AvoidOnResultFragment getAvoidOnResultFragment(Activity activity) {
         AvoidOnResultFragment avoidOnResultFragment = findAvoidOnResultFragment(activity);
-        boolean isNewInstance = avoidOnResultFragment == null;
-        if (isNewInstance) {
+        if (avoidOnResultFragment == null) {
             avoidOnResultFragment = new AvoidOnResultFragment();
             FragmentManager fragmentManager = activity.getFragmentManager();
             fragmentManager
@@ -37,29 +36,29 @@ public class AvoidOnResult {
         return avoidOnResultFragment;
     }
 
-    private AvoidOnResultFragment findAvoidOnResultFragment(Activity activity){
+    private AvoidOnResultFragment findAvoidOnResultFragment(Activity activity) {
         return (AvoidOnResultFragment) activity.getFragmentManager().findFragmentByTag(TAG);
     }
 
-    public Observable<ActivityResultInfo> startForResult(Intent intent, int requestCode){
+    public Observable<ActivityResultInfo> startForResult(Intent intent, int requestCode) {
         return mAvoidOnResultFragment.startForResult(intent, requestCode);
     }
 
-    public Observable<ActivityResultInfo> startForResult(Class<?> clazz, int requestCode){
-        Intent intent = new Intent(mActivity,clazz);
-        return startForResult(intent,requestCode);
+    public Observable<ActivityResultInfo> startForResult(Class<?> clazz, int requestCode) {
+        Intent intent = new Intent(mActivity, clazz);
+        return startForResult(intent, requestCode);
     }
 
-    public void startForResult(Intent intent, int requestCode, Callback callback){
-        mAvoidOnResultFragment.startForResult(intent,requestCode,callback);
+    public void startForResult(Intent intent, int requestCode, Callback callback) {
+        mAvoidOnResultFragment.startForResult(intent, requestCode, callback);
     }
 
-    public void startForResult(Class<?> clazz, int requestCode, Callback callback){
-        Intent intent = new Intent(mActivity,clazz);
-        startForResult(intent,requestCode,callback);
+    public void startForResult(Class<?> clazz, int requestCode, Callback callback) {
+        Intent intent = new Intent(mActivity, clazz);
+        startForResult(intent, requestCode, callback);
     }
 
-    public interface Callback{
+    public interface Callback {
         void onActivityResult(int requestCode, int resultCode, Intent data);
     }
 }
