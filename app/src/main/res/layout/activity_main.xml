@@ -32,4 +32,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/callback"
         android:layout_marginTop="8dp" />
+    <Button
+        android:id="@+id/normal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="普通方式"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rxjava"
+        android:layout_marginTop="8dp" />
 </android.support.constraint.ConstraintLayout>

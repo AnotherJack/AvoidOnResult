@@ -14,11 +14,8 @@ public class AvoidOnResult {
     private static final String TAG = "AvoidOnResult";
     private AvoidOnResultFragment mAvoidOnResultFragment;
 
-    private Activity mActivity;
-
     public AvoidOnResult(Activity activity) {
         mAvoidOnResultFragment = getAvoidOnResultFragment(activity);
-        mActivity = activity;
     }
 
 
@@ -45,7 +42,7 @@ public class AvoidOnResult {
     }
 
     public Observable<ActivityResultInfo> startForResult(Class<?> clazz, int requestCode) {
-        Intent intent = new Intent(mActivity, clazz);
+        Intent intent = new Intent(mAvoidOnResultFragment.getActivity(), clazz);
         return startForResult(intent, requestCode);
     }
 
@@ -54,7 +51,7 @@ public class AvoidOnResult {
     }
 
     public void startForResult(Class<?> clazz, int requestCode, Callback callback) {
-        Intent intent = new Intent(mActivity, clazz);
+        Intent intent = new Intent(mAvoidOnResultFragment.getActivity(), clazz);
         startForResult(intent, requestCode, callback);
     }
 

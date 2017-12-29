@@ -11,8 +11,9 @@ import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    val REQUEST_CODE_CALLBACK = 23
-    val REQUEST_CODE_RXJAVA = 24
+    private val REQUEST_CODE_CALLBACK = 23
+    private val REQUEST_CODE_RXJAVA = 24
+    private val REQUEST_CODE_NORMAL = 25
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,18 @@ class MainActivity : AppCompatActivity() {
                     })
         }
 
+        //普通方式
+        normal.setOnClickListener {
+            val intent = Intent(this,FetchDataActivity::class.java)
+            startActivityForResult(intent,REQUEST_CODE_NORMAL)
+        }
 
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_NORMAL){
+            Toast.makeText(this,"normal -> ",Toast.LENGTH_SHORT).show()
+        }
     }
 }
