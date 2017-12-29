@@ -1,6 +1,7 @@
 package io.github.anotherjack.avoidonresult;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 
@@ -16,6 +17,10 @@ public class AvoidOnResult {
 
     public AvoidOnResult(Activity activity) {
         mAvoidOnResultFragment = getAvoidOnResultFragment(activity);
+    }
+
+    public AvoidOnResult(Fragment fragment){
+        this(fragment.getActivity());
     }
 
 
