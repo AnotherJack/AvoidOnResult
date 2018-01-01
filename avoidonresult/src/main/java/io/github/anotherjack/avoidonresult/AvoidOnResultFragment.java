@@ -20,7 +20,6 @@ public class AvoidOnResultFragment extends Fragment {
     private Map<Integer, PublishSubject<ActivityResultInfo>> mSubjects = new HashMap<>();
     private Map<Integer, AvoidOnResult.Callback> mCallbacks = new HashMap<>();
 
-
     public AvoidOnResultFragment() {
     }
 

@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         rxjava.setOnClickListener {
             AvoidOnResult(this)
                     .startForResult(FetchDataActivity::class.java, REQUEST_CODE_RXJAVA)
+                    //下面可自由变换
                     .filter { it.resultCode == Activity.RESULT_OK }
                     .flatMap {
                         val text = it.data.getStringExtra("text")

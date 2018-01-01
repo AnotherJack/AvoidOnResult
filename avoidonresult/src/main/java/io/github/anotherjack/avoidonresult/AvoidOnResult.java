@@ -23,7 +23,6 @@ public class AvoidOnResult {
         this(fragment.getActivity());
     }
 
-
     private AvoidOnResultFragment getAvoidOnResultFragment(Activity activity) {
         AvoidOnResultFragment avoidOnResultFragment = findAvoidOnResultFragment(activity);
         if (avoidOnResultFragment == null) {
