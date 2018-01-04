@@ -15,11 +15,31 @@ public class AvoidOnResult {
     private static final String TAG = "AvoidOnResult";
     private AvoidOnResultFragment mAvoidOnResultFragment;
 
+    /**
+     * Builder模式构造实例
+     *
+     * @param activity
+     * @return
+     */
+    public static AvoidOnResult init(Activity activity) {
+        return new AvoidOnResult(activity);
+    }
+
+    /**
+     * Builder模式构造实例
+     *
+     * @param fragment
+     * @return
+     */
+    public static AvoidOnResult init(Fragment fragment) {
+        return new AvoidOnResult(fragment);
+    }
+
     public AvoidOnResult(Activity activity) {
         mAvoidOnResultFragment = getAvoidOnResultFragment(activity);
     }
 
-    public AvoidOnResult(Fragment fragment){
+    public AvoidOnResult(Fragment fragment) {
         this(fragment.getActivity());
     }
 

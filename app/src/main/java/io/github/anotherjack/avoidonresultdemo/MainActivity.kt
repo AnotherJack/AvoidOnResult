@@ -58,6 +58,11 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, REQUEST_CODE_NORMAL)
         }
 
+        multifragment.setOnClickListener {
+            val intent = Intent(this, MultiFragmentActiivty::class.java)
+            startActivity(intent)
+        }
+
 
     }
 

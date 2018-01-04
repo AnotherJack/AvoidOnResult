@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FetchDataActivity"></activity>
+        <activity android:name=".MultiFragmentActiivty"/>
     </application>
 
 </manifest>
