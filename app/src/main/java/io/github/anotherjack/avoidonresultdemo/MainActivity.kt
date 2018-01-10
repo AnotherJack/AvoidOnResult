@@ -11,9 +11,6 @@ import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private val REQUEST_CODE_CALLBACK = 23
-    private val REQUEST_CODE_RXJAVA = 24
-    private val REQUEST_CODE_NORMAL = 25
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +18,8 @@ class MainActivity : AppCompatActivity() {
 
         //callback方式
         callback.setOnClickListener {
-            AvoidOnResult(this).startForResult(FetchDataActivity::class.java, REQUEST_CODE_CALLBACK, object : AvoidOnResult.Callback {
-                override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
+            AvoidOnResult(this).startForResult(FetchDataActivity::class.java, object : AvoidOnResult.Callback {
+                override fun onActivityResult(resultCode: Int, data: Intent?) =
                         if (resultCode == Activity.RESULT_OK) {
                             val text = data?.getStringExtra("text")
                             Toast.makeText(this@MainActivity, "callback -> " + text, Toast.LENGTH_SHORT).show()
@@ -36,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         //rxjava方式
         rxjava.setOnClickListener {
             AvoidOnResult(this)
-                    .startForResult(FetchDataActivity::class.java, REQUEST_CODE_RXJAVA)
+                    .startForResult(FetchDataActivity::class.java)
                     //下面可自由变换
                     .filter { it.resultCode == Activity.RESULT_OK }
                     .flatMap {
@@ -55,14 +52,14 @@ class MainActivity : AppCompatActivity() {
         //普通方式
         normal.setOnClickListener {
             val intent = Intent(this, FetchDataActivity::class.java)
-            startActivityForResult(intent, REQUEST_CODE_NORMAL)
+            startActivityForResult(intent, 1)
         }
 
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_NORMAL) {
+        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
             val text = data?.getStringExtra("text")
             Toast.makeText(this, "normal -> " + text, Toast.LENGTH_SHORT).show()
         }

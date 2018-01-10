@@ -4,26 +4,18 @@ import android.content.Intent;
 
 /**
  * Created by jack on 2017/12/27.
+ * modify by https://guofeng007.github.io remove request code ,instead use callback.hashcode as requestcode 2017/1/10
  */
 
 public class ActivityResultInfo {
-    private int requestCode;
     private int resultCode;
     private Intent data;
 
-    public ActivityResultInfo(int requestCode, int resultCode, Intent data) {
-        this.requestCode = requestCode;
+    public ActivityResultInfo(int resultCode, Intent data) {
         this.resultCode = resultCode;
         this.data = data;
     }
 
-    public int getRequestCode() {
-        return requestCode;
-    }
-
-    public void setRequestCode(int requestCode) {
-        this.requestCode = requestCode;
-    }
 
     public int getResultCode() {
         return resultCode;
