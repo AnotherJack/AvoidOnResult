@@ -14,28 +14,16 @@ import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by jack on 2017/12/27.
- * modify by https://guofeng007.github.io remove request by  auto genereate requestcode 2017/1/10
+ * modify by https://guofeng007.github.io remove request code ,instead use callback.hashcode as requestcode 2017/1/10
  */
 
 public class AvoidOnResultFragment extends Fragment {
     private Map<Integer, PublishSubject<ActivityResultInfo>> mSubjects = new HashMap<>();
     private Map<Integer, AvoidOnResult.Callback> mCallbacks = new HashMap<>();
-    private volatile int  currentRequestCode;
 
     public AvoidOnResultFragment() {
     }
 
-    /**
-     * 自动为每个 activity 中发出的请求构造 requestcode
-     * 循环使用
-     * @return
-     */
-    private synchronized int generateAutoRequestCode(){
-        if(currentRequestCode == Integer.MAX_VALUE){
-            currentRequestCode =Integer.MIN_VALUE ;
-        }
-         currentRequestCode++;
-    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,21 +31,20 @@ public class AvoidOnResultFragment extends Fragment {
     }
 
     public Observable<ActivityResultInfo> startForResult(final Intent intent) {
-        PublishSubject<ActivityResultInfo> subject = PublishSubject.create();
-        final int autoRequestCode = generateAutoRequestCode();
-        mSubjects.put(autoRequestCode, subject);
+        final PublishSubject<ActivityResultInfo> subject = PublishSubject.create();
         return subject.doOnSubscribe(new Consumer<Disposable>() {
             @Override
             public void accept(Disposable disposable) throws Exception {
-                startActivityForResult(intent, autoRequestCode);
+                mSubjects.put(subject.hashCode(), subject);
+                startActivityForResult(intent, subject.hashCode());
             }
         });
     }
 
     public void startForResult(Intent intent, AvoidOnResult.Callback callback) {
-        final int autoRequestCode = generateAutoRequestCode();
-        mCallbacks.put(autoRequestCode, callback);
-        startActivityForResult(intent, autoRequestCode);
+
+        mCallbacks.put(callback.hashCode(), callback);
+        startActivityForResult(intent, callback.hashCode());
     }
 
     @Override
