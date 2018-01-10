@@ -9,6 +9,7 @@ import io.reactivex.Observable;
 
 /**
  * Created by jack on 2017/12/27.
+ * modify by https://guofeng007.github.io remove request by  auto genereate requestcode 2017/1/10
  */
 
 public class AvoidOnResult {
@@ -41,25 +42,25 @@ public class AvoidOnResult {
         return (AvoidOnResultFragment) activity.getFragmentManager().findFragmentByTag(TAG);
     }
 
-    public Observable<ActivityResultInfo> startForResult(Intent intent, int requestCode) {
-        return mAvoidOnResultFragment.startForResult(intent, requestCode);
+    public Observable<ActivityResultInfo> startForResult(Intent intent) {
+        return mAvoidOnResultFragment.startForResult(intent);
     }
 
-    public Observable<ActivityResultInfo> startForResult(Class<?> clazz, int requestCode) {
+    public Observable<ActivityResultInfo> startForResult(Class<?> clazz) {
         Intent intent = new Intent(mAvoidOnResultFragment.getActivity(), clazz);
-        return startForResult(intent, requestCode);
+        return startForResult(intent);
     }
 
-    public void startForResult(Intent intent, int requestCode, Callback callback) {
-        mAvoidOnResultFragment.startForResult(intent, requestCode, callback);
+    public void startForResult(Intent intent, Callback callback) {
+        mAvoidOnResultFragment.startForResult(intent, callback);
     }
 
-    public void startForResult(Class<?> clazz, int requestCode, Callback callback) {
+    public void startForResult(Class<?> clazz, Callback callback) {
         Intent intent = new Intent(mAvoidOnResultFragment.getActivity(), clazz);
-        startForResult(intent, requestCode, callback);
+        startForResult(intent, callback);
     }
 
     public interface Callback {
-        void onActivityResult(int requestCode, int resultCode, Intent data);
+        void onActivityResult(int resultCode, Intent data);
     }
 }
