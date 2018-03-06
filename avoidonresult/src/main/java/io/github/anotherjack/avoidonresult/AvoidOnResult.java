@@ -60,6 +60,11 @@ public class AvoidOnResult {
         startForResult(intent, callback);
     }
 
+    //此方法主要是为了在mvvm的viewmodel中使用，以此避免viewmodel持有activity的引用
+    public void finishActivity(){
+        mAvoidOnResultFragment.getActivity().finish();
+    }
+
     public interface Callback {
         void onActivityResult(int resultCode, Intent data);
     }
