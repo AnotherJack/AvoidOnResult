@@ -35,16 +35,16 @@ public class AvoidOnResultFragment extends Fragment {
         return subject.doOnSubscribe(new Consumer<Disposable>() {
             @Override
             public void accept(Disposable disposable) throws Exception {
-                mSubjects.put(subject.hashCode(), subject);
-                startActivityForResult(intent, subject.hashCode());
+                mSubjects.put(shorthashCode(subject), subject);
+                startActivityForResult(intent, shorthashCode(subject));
             }
         });
     }
 
     public void startForResult(Intent intent, AvoidOnResult.Callback callback) {
 
-        mCallbacks.put(callback.hashCode(), callback);
-        startActivityForResult(intent, callback.hashCode());
+        mCallbacks.put(shorthashCode(callback), callback);
+        startActivityForResult(intent, shorthashCode(callback));
     }
 
     @Override
@@ -62,6 +62,16 @@ public class AvoidOnResultFragment extends Fragment {
         if (callback != null) {
             callback.onActivityResult( resultCode, data);
         }
+    }
+
+    /**
+     * 这个方法用于解决下面这个异常抛出
+     * java.lang.IllegalArgumentException: Can only use lower 16 bits for requestCode
+     * @param callback
+     * @return
+     */
+    private int shorthashCode(Object callback) {
+        return callback.hashCode() & 0x0000ffff;
     }
 
 }
