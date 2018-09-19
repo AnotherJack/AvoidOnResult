@@ -1,21 +1,6 @@
----
-layout: post
-title: 优雅地封装和使用 onActivityResult 
-categories: Blog
-description:  onActivityResult
-keywords:   onActivityResult
-
----
-
-
+相关文章：[避免使用onActivityResult，以提高代码可读性](https://juejin.im/post/5a4611786fb9a0451a76b565)
 
 # 优雅地封装和使用 onActivityResult 
-
- 
-
-**作者：国风**
-
-## [原文](https://guofeng007.github.io/2018/01/05/onActivityResult/)
 
 # 更新
 调用时去掉 requestcode，更加简单清晰，内部使用 callback.hashcode 作为 requestcode 
@@ -34,10 +19,8 @@ AvoidOnResult(this).startForResult(FetchDataActivity::class.java, object : Avoid
 ```
 
 # 一、背景
-在日常Android开发中，通过startActivityForResult跳转页面获取数据，然后在onActivityResult中处理的返回数据。这种方式想必大家早就习以为常了，我想大家再用的时候多少都会有些疑问？：为啥统一个逻辑分散在两个地方，而且 onActivityResult 经常会堆积着各种 if else。有没有办法能够像 setOnClickListener 或者 RxJava 那样，直接在一个地方处理调用和回调？答案是肯定的，这个问题以前我也想过，无奈之前不怎么善于真正发现问题、提出问题，而且解决问题的能力也不够。
+在日常Android开发中，通过startActivityForResult跳转页面获取数据，然后在onActivityResult中处理的返回数据。这种方式想必大家早就习以为常了，我想大家再用的时候多少都会有些疑问？：为啥统一个逻辑分散在两个地方，而且 onActivityResult 经常会堆积着各种 if else。有没有办法能够像 setOnClickListener 或者 RxJava 那样，直接在一个地方处理调用和回调？答案是肯定的。
 
-
-[问题的提出者，和部分解决者](https://juejin.im/post/5a4611786fb9a0451a76b565?utm_source=gold_browser_extension#heading-5)，文中作者有一种思路，就是想通过 hook 系统 onActivityResult 回调，统一分发，但是当时并未找到思路。而我之前做过插件框架，热修复，hybrid,Router。对 Hook 自己认为还是驾轻就熟的，而且已经 hook 过作者所找寻的点，所以就在该基础上写了 Hook版本[github](https://github.com/guofeng007/OnResultManagerHook)。
 
 接下来介绍下 onActivityResult实现是三种思路，以及各自的优缺点。
 
@@ -45,8 +28,6 @@ AvoidOnResult(this).startForResult(FetchDataActivity::class.java, object : Avoid
 
 ## 2.1 Lifecycle add Fragment 方案
 Lifecycle 监听 activity 的声明周期原理是，它内部持有一个Fragment，这个fragment没有视图，只负责请求权限和返回结果，相当于一个桥梁的作用，在这个 Fragment 中，会把所有的回调转发出去，实现监听。
-
-这里直接借用 anotherJack 的demo
 
 ```java
 public class AvoidOnResult {
