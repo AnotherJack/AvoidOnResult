@@ -4,7 +4,6 @@ import android.content.Intent;
 
 /**
  * Created by jack on 2017/12/27.
- * modify by https://guofeng007.github.io remove request code ,instead use callback.hashcode as requestcode 2017/1/10
  */
 
 public class ActivityResultInfo {

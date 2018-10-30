@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
@@ -14,7 +15,6 @@ import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by jack on 2017/12/27.
- * modify by https://guofeng007.github.io remove request code ,instead use callback.hashcode as requestcode 2017/1/10
  */
 
 public class AvoidOnResultFragment extends Fragment {
@@ -35,16 +35,17 @@ public class AvoidOnResultFragment extends Fragment {
         return subject.doOnSubscribe(new Consumer<Disposable>() {
             @Override
             public void accept(Disposable disposable) throws Exception {
-                mSubjects.put(subject.hashCode(), subject);
-                startActivityForResult(intent, subject.hashCode());
+                int requestCode = generateRequestCode();
+                mSubjects.put(requestCode, subject);
+                startActivityForResult(intent, requestCode);
             }
         });
     }
 
     public void startForResult(Intent intent, AvoidOnResult.Callback callback) {
-
-        mCallbacks.put(callback.hashCode(), callback);
-        startActivityForResult(intent, callback.hashCode());
+        int requestCode = generateRequestCode();
+        mCallbacks.put(requestCode, callback);
+        startActivityForResult(intent, requestCode);
     }
 
     @Override
@@ -60,7 +61,17 @@ public class AvoidOnResultFragment extends Fragment {
         //callback方式的处理
         AvoidOnResult.Callback callback = mCallbacks.remove(requestCode);
         if (callback != null) {
-            callback.onActivityResult( resultCode, data);
+            callback.onActivityResult(resultCode, data);
+        }
+    }
+
+    private int generateRequestCode(){
+        Random random = new Random();
+        for (;;){
+            int code = random.nextInt(65536);
+            if (!mSubjects.containsKey(code) && !mCallbacks.containsKey(code)){
+                return code;
+            }
         }
     }
 
